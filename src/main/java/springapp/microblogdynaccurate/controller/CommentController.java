@@ -31,6 +31,12 @@ public class CommentController {
 		return ResponseEntity.ok(repository.findAll());
 	}
 	
+	@GetMapping("/{idComment}")
+    public ResponseEntity<Comment>getById(@PathVariable long idComment){
+    	return repository.findById(idComment).map(resp-> ResponseEntity.ok(resp))
+    			.orElse(ResponseEntity.notFound().build());
+    }
+	
 	@PostMapping
 	public ResponseEntity<Comment> post(@RequestBody Comment comment){
 		return ResponseEntity.status(HttpStatus.CREATED)

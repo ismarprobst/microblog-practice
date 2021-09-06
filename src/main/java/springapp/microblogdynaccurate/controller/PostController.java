@@ -23,7 +23,7 @@ public class PostController {
         return ResponseEntity.ok(repository.findAll()); //list all posts
     }
 
-    @GetMapping("/{title}")
+    @GetMapping("/by-title/{title}")
     public ResponseEntity<List<Post>> getByTitle(@PathVariable String title) {
         return ResponseEntity.ok(repository.findAllByTitlePostContainingIgnoreCase(title));
     }
@@ -31,6 +31,12 @@ public class PostController {
     @GetMapping("/by-tag/{tag}")
     public ResponseEntity<List<Post>> getByTag(@PathVariable String tag) {
         return ResponseEntity.ok(repository.findAllByTagsContainingIgnoreCase(tag));
+    }
+    
+    @GetMapping("/{idPost}")
+    public ResponseEntity<Post>getById(@PathVariable long idPost){
+    	return repository.findById(idPost).map(resp-> ResponseEntity.ok(resp))
+    			.orElse(ResponseEntity.notFound().build());
     }
 
 
